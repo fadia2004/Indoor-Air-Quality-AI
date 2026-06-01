@@ -1,0 +1,1 @@
+Applying multiple edits: compare.html modal simplification and removal of table/ranking/insights; js/compare.js remove ranking/insights/table functions and calls, add compact summary cards rendering. This file is a note, not used by app.
