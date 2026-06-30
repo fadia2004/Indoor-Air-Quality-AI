@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Scan | AirPredict</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="styles/quick-scan.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="logo">
+      <div class="logo-icon"><i class="ti ti-wind"></i></div>
+      AirPredict
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="quick-scan.html">Quick Scan</a></li>
+      <li><a href="compare.html">Room Comparison</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <a class="btn-nav" href="quick-scan.html">Quick Scan</a>
+  </nav>
+
+  <main class="scan-shell">
+    <section class="scan-heading">
+      <span class="eyebrow">AI Diagnostics</span>
+      <h1>Quick Scan</h1>
+    </section>
+
+    <section class="scan-grid">
+      <article class="scan-panel">
+        <div class="panel-inner">
+
+          <div class="panel-header">
+            <div class="panel-heading">
+              <span class="eyebrow">LIVE INPUT</span>
+            </div>
+            <div class="mic-action-wrap" aria-label="Voice controls">
+              <button type="button" class="floating-mic" id="globalMic" aria-label="Use voice input"><i class="ti ti-microphone"></i></button>
+              <div class="mic-wave-lines" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="mic-helper-text" id="micHelperText">Use the microphone for voice input</div>
+            </div>
+          </div>
+          <span class="status-pill status-pill-hidden" id="voiceStatus" aria-hidden="true"></span>
+
+          <form id="airForm" class="scan-form">
+            <div class="form-grid">
+              <div class="field-group">
+                <label for="co2">CO2 (ppm)</label>
+                <div class="field-input-wrap">
+                  <input type="number" id="co2" name="co2" value="950" min="400" max="3000" step="1">
+                  <button type="button" class="mini-mic" data-target="co2" aria-label="Voice input for CO2"><i class="ti ti-microphone"></i></button>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="temperature">Temperature (°C)</label>
+                <div class="field-input-wrap">
+                  <input type="number" id="temperature" name="temperature" value="22" min="5" max="40" step="0.5">
+                  <button type="button" class="mini-mic" data-target="temperature" aria-label="Voice input for temperature"><i class="ti ti-microphone"></i></button>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="humidity">Humidity (%)</label>
+                <div class="field-input-wrap">
+                  <input type="number" id="humidity" name="humidity" value="44" min="10" max="90" step="1">
+                  <button type="button" class="mini-mic" data-target="humidity" aria-label="Voice input for humidity"><i class="ti ti-microphone"></i></button>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="occupancy">Occupancy</label>
+                <div class="field-input-wrap">
+                  <input type="number" id="occupancy" name="occupancy" value="3" min="1" max="40" step="1">
+                  <button type="button" class="mini-mic" data-target="occupancy" aria-label="Voice input for occupancy"><i class="ti ti-microphone"></i></button>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="windowStatus">Window status</label>
+                <div class="field-input-wrap">
+                  <select id="windowStatus" name="windowStatus">
+                    <option value="Open">Open</option>
+                    <option value="Closed">Closed</option>
+                  </select>
+                  <button type="button" class="mini-mic" data-target="windowStatus" aria-label="Voice input for window status"><i class="ti ti-microphone"></i></button>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="month">Month</label>
+                <div class="field-input-wrap">
+                  <input id="month" name="month" value="January" readonly>
+                  <button type="button" class="mini-mic" data-target="month" aria-label="Voice input for month"><i class="ti ti-microphone"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="predict-btn" id="predictBtn">Predict Air Quality</button>
+          </form>
+        </div>
+      </article>
+
+      <article class="scan-panel result-panel" id="resultsPanel">
+        <div class="panel-inner">
+          <div class="results-placeholder" id="resultsPlaceholder"></div>
+
+          <div class="results-content" id="resultsContent">
+
+            <div class="results-summary">
+              <div class="aqi-ring" id="aqiRing">
+                <div class="aqi-ring-inner">
+                  <span class="aqi-value" id="aqiValue">--</span>
+                  <span class="aqi-label">AQI</span>
+                </div>
+              </div>
+              <div class="result-copy">
+                <span class="status-pill" id="aqiStatusPill">WAITING</span>
+                <h3 id="summaryHeading">Your score will appear here</h3>
+                <p id="summaryText">Prediction details will update as soon as the room conditions are analyzed.</p>
+              </div>
+            </div>
+
+            <div class="metrics-row">
+              <div class="metric-card">
+                <span class="metric-icon"><i class="ti ti-cloud"></i></span>
+                <strong id="metaCo2">--</strong>
+                <span class="metric-unit">ppm</span>
+                <span class="metric-status-pill" id="metaCo2Status">--</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-icon"><i class="ti ti-temperature"></i></span>
+                <strong id="metaTemperature">--</strong>
+                <span class="metric-unit">°C</span>
+                <span class="metric-status-pill" id="metaTemperatureStatus">--</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-icon"><i class="ti ti-droplet"></i></span>
+                <strong id="metaHumidity">--</strong>
+                <span class="metric-unit">%</span>
+                <span class="metric-status-pill" id="metaHumidityStatus">--</span>
+              </div>
+            </div>
+
+
+            <div class="recommendations-list" id="recommendationsList"></div>
+
+            <div class="result-actions">
+              <button type="button" class="secondary-btn" id="readRecommendationsBtn" disabled>Read Recommendations</button>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script src="js/quick-scan.js"></script>
+</body>
+</html>
